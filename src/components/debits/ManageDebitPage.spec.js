@@ -4,11 +4,7 @@ import {ManageDebitPage} from './ManageDebitPage';
 
 describe('Manage Debit Page', () => {
   it('creates a new debit successfully', () => {
-    const props = {
-      actions: { saveDebit: () => Promise.resolve() },
-      categories: [],
-      debit: {id: '', postDate: '01/01/2018', description: 'Publix', amount: '100.00', category: 'groceries'}
-    };
+    const props = setupProps('', false);
     const wrapper = mount(<ManageDebitPage {...props} />);
     const h1Text = wrapper.find('h1').text();
     const saveButton = wrapper.find('input').last();
@@ -21,11 +17,7 @@ describe('Manage Debit Page', () => {
   });
 
   it('updates an existing debit successfully', () => {
-    const props = {
-      actions: { saveDebit: () => Promise.resolve() },
-      categories: [],
-      debit: {id: '1', postDate: '01/01/2018', description: 'Publix', amount: '100.00', category: 'groceries'}
-    };
+    const props = setupProps('1', false);
     const wrapper = mount(<ManageDebitPage {...props} />);
     const h1Text = wrapper.find('h1').text();
     const amountInput = wrapper.find('input[name="amount"]').first();
@@ -42,11 +34,7 @@ describe('Manage Debit Page', () => {
   });
 
   it('sets error message when trying to save empty post date', () => {
-    const props = {
-      actions: { saveDebit: () => Promise.resolve() },
-      categories: [],
-      debit: {id: '', postDate: '', description: '', amount: '', category: ''}
-    };
+    const props = setupProps('', true);
     const wrapper = mount(<ManageDebitPage {...props} />);
     const saveButton = wrapper.find('input').last();
     expect(saveButton.prop('type')).toBe('submit');
@@ -55,3 +43,18 @@ describe('Manage Debit Page', () => {
     expect(wrapper.state().errors.postDate).toBe('Missing: Must have a post date.');
   });
 });
+
+function setupProps(id, isEmpty) {
+  return {
+    actions: { saveDebit: () => Promise.resolve() },
+    categories: [],
+    debit: {
+      id: id ? id : '',
+      postDate: isEmpty ? '' : '01/01/2018',
+      description: isEmpty ? '' : 'Publix',
+      amount: isEmpty ? '' : '100.00',
+      category: isEmpty ? '' : 'groceries'
+    }
+  };
+}
+

@@ -4,11 +4,7 @@ import {ManageCreditPage} from './ManageCreditPage';
 
 describe('Manage Credit Page', () => {
   it('creates a new credit successfully', () => {
-    const props = {
-      actions: { saveCredit: () => Promise.resolve() },
-      categories: [],
-      credit: {id: '', postDate: '01/01/2018', description: 'Freelance', amount: '100.00', category: 'miscellaneous'}
-    };
+    const props = setupProps('', false);
     const wrapper = mount(<ManageCreditPage {...props} />);
     const h1Text = wrapper.find('h1').text();
     const saveButton = wrapper.find('input').last();
@@ -21,11 +17,7 @@ describe('Manage Credit Page', () => {
   });
 
   it('updates an existing credit successfully', () => {
-    const props = {
-      actions: { saveCredit: () => Promise.resolve() },
-      categories: [],
-      credit: {id: '1', postDate: '01/01/2018', description: 'Freelance', amount: '100.00', category: 'miscellaneous'}
-    };
+    const props = setupProps('1', false);
     const wrapper = mount(<ManageCreditPage {...props} />);
     const h1Text = wrapper.find('h1').text();
     const amountInput = wrapper.find('input[name="amount"]').first();
@@ -42,11 +34,7 @@ describe('Manage Credit Page', () => {
   });
 
   it('sets error message when trying to save empty post date', () => {
-    const props = {
-      actions: { saveCredit: () => Promise.resolve() },
-      categories: [],
-      credit: {id: '', postDate: '', description: '', amount: '', category: ''}
-    };
+    const props = setupProps('', true);
     const wrapper = mount(<ManageCreditPage {...props} />);
     const saveButton = wrapper.find('input').last();
     expect(saveButton.prop('type')).toBe('submit');
@@ -55,3 +43,17 @@ describe('Manage Credit Page', () => {
     expect(wrapper.state().errors.postDate).toBe('Missing: Must have a post date.');
   });
 });
+
+function setupProps(id, isEmpty) {
+  return {
+    actions: { saveCredit: () => Promise.resolve() },
+    categories: [],
+    credit: {
+      id: id ? id : '',
+      postDate: isEmpty ? '' : '01/01/2018',
+      description: isEmpty ? '' : 'Freelance',
+      amount: isEmpty ? '' : '100.00',
+      category: isEmpty ? '' : 'miscellaneous'
+    }
+  };
+}
