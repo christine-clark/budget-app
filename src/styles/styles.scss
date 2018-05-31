@@ -1,0 +1,184 @@
+/* Variables */
+$text: #4d4d4d;
+$blue: #5bb7db;
+$green: #60b044;
+$light-green: #caf2bc;
+$red: #ff0000;
+$light-red: #ffcccc;
+
+/* Styles */
+body {
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  color: $text;
+  min-width: 230px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-smoothing: antialiased;
+  font-weight: 300;
+}
+
+a {
+  &:link {
+    text-decoration: none;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h2 {
+  color: $blue;
+
+  a {
+    color: inherit;
+  }
+
+  span {
+    display: inline-block;
+    font-weight: normal;
+  }
+}
+
+nav {
+  padding: 1rem 0;
+}
+
+table {
+  width: 100%;
+
+  th, td {
+    text-align: left;
+  }
+
+  td {
+    width: 25%;
+    padding: 0.25rem;
+  }
+}
+
+form {
+  label, input {
+    display: block;
+  }
+
+  label {
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0.5rem;
+
+    &:not([type="submit"]) {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    &[type="submit"] {
+      padding: 0.25rem 0.5rem;
+      background: linear-gradient(#fff, #eee);
+      border: 1px solid #ccc;
+      border-radius: 5px;
+
+      &:hover {
+        background: linear-gradient(#eee, #fff);
+      }
+    }
+  }
+
+  select {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 1rem;
+  }
+}
+
+.clear {
+  clear: both;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.add-btn {
+  display: block;
+  margin: 1.5rem 0;
+  float: right;
+  background: linear-gradient(#fff, #eee);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  &:hover {
+    background: linear-gradient(#eee, #fff);
+  }
+}
+
+.total {
+  padding: 0.5rem;
+  color: $text;
+  background: #f6f6f6;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.credit {
+  color: $green;
+}
+
+.debit {
+  color: $red;
+
+  &::before {
+    content: "-";
+    padding-right: 0.15rem;
+  }
+}
+
+.form-group {
+  &.has-error {
+    color: $red;
+
+    input {
+      border: 1px solid $red;
+    }
+  }
+}
+
+.alert {
+  max-width: 500px;
+  color: $text;
+  background-color: #ffcc33;
+  border: 1px solid #ff9900;
+  border-radius: 5px;
+  padding: 0.25rem;
+  margin: 0.5rem 0;
+
+  &.alert-success {
+    background-color: $light-green;
+    border: 1px solid $green;
+  }
+
+  &.alert-danger {
+    background-color: $light-red;
+    border: 1px solid $red;
+  }
+}
