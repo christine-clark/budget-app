@@ -9,9 +9,9 @@ This project was initially built from the [React-Slingshot](https://github.com/c
 
     `git clone https://github.com/christine-clark/budgeting-app.git`
 
-2. **Run the setup script**
+2. **Install dependencies**
 
-    `npm run setup`
+    `npm install`
 
 3. **Run the app**
 
