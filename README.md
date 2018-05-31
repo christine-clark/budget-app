@@ -7,7 +7,7 @@ This project was initially built from the [React-Slingshot](https://github.com/c
 
 1. **Clone the project**
 
-    `git clone https://github.com/christine-clark/budgeting-app.git`.
+    `git clone https://github.com/christine-clark/budgeting-app.git`
 
 2. **Run the setup script**
 
