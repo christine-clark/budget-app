@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import SelectInput from '../common/SelectInput';
 import TextInput from '../common/TextInput';
 
+/**
+ * The Credit Form which will allow for adding new credits or
+ * updating existing credits depending on the credit object
+ * passed into the form. This will also handle displaying
+ * errors if available or a success message if saved successfully.
+ */
 const CreditForm = ({credit, allCategories, onSave, onChange, saving, errors}) => (
   <form>
     {saving && <div className="alert">Saving...</div>}

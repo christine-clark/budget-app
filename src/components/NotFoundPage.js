@@ -1,6 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+/**
+ * Page not found should display when browsing to a page that does not exist.
+ */
 const NotFoundPage = () => {
   return (
     <main>

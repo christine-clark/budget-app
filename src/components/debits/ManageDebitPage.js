@@ -7,6 +7,9 @@ import DebitForm from './DebitForm';
 import {categoriesFormattedForDropdown} from '../selectors/categoriesSelector';
 import {validateForm} from '../../utils/validation';
 
+/**
+ * Display debit form to update or add a debit.
+ */
 export class ManageDebitPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -29,6 +32,11 @@ export class ManageDebitPage extends React.Component {
     }
   }
 
+  /**
+   * Update the debit state every time a change is made in the input field.
+   * @param {Event} event - The event from onChange fired from the input field.
+   * @returns {*} The result from setting the state of debit object.
+   */
   updateDebitState(event) {
     const field = event.target.name;
     let debit = Object.assign({}, this.state.debit);
@@ -36,6 +44,10 @@ export class ManageDebitPage extends React.Component {
     return this.setState({debit: debit});
   }
 
+  /**
+   * Validate the debit form and check if all fields are valid, such as post date and amount.
+   * @returns {boolean} True or false whether the form is valid or not.
+   */
   debitFormIsValid() {
     const debit = Object.assign({}, this.state.debit);
     const form = validateForm(debit);
@@ -43,6 +55,13 @@ export class ManageDebitPage extends React.Component {
     return form.formIsValid;
   }
 
+  /**
+   * Save the debit object when the submit button is clicked in the debit form.
+   * Update the states for 'saving' and 'debits' with the updated debit object.
+   * Redirect back to the home page once successfully saved.
+   * @param {Event} event - The event from submit button click.
+   * @returns {undefined}
+   */
   saveDebit(event) {
     event.preventDefault();
 
@@ -70,6 +89,11 @@ export class ManageDebitPage extends React.Component {
       });
   }
 
+  /**
+   * Redirect back to the home page and also display success alert for
+   * 800ms before automatically redirecting user.
+   * @returns {undefined}
+   */
   redirect() {
     const self = this;
     const alertElement = document.getElementsByClassName('alert')[0];
@@ -82,6 +106,10 @@ export class ManageDebitPage extends React.Component {
     }, 800);
   }
 
+  /**
+   * Render the debit form for updating or adding a debit.
+   * @returns {HTMLElement} The html to display in UI.
+   */
   render() {
     return(
       <DebitForm debit={this.state.debit}
@@ -105,6 +133,10 @@ ManageDebitPage.contextTypes = {
   router: PropTypes.object
 };
 
+/**
+ * Get a debit by id. Filter the existing list of debits to retrieve a single debit.
+ * @returns {Object} The debit object if found.
+ */
 function getDebitById(debits, id) {
   const debit = debits.filter(debit => debit.id === id);
   return debit ? debit[0] : null;

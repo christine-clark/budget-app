@@ -1,8 +1,9 @@
 import delay from './delay';
 
-// This file mocks a web API by working with the hard-coded data below.
-// It uses setTimeout to simulate the delay of an AJAX call.
-// All calls return promises.
+/**
+ * The initial mock credits to load in the project.
+ * @type {Array|Object}
+ */
 const credits = [{
   id: "1",
   postDate: "05/01/2018",
@@ -11,12 +12,26 @@ const credits = [{
   category: "employment"
 }];
 
-//This would be performed on the server in a real app. Just stubbing in.
+/**
+ * Generates an id for a new mock credit.
+ * @type {Function}
+ */
 const generateId = () => {
   return String(credits.length + 1);
 };
 
+/**
+ * Class representing the Credit API mocked for demo purposes.
+ * It mocks a web API by working with the hard-coded data below.
+ * It uses setTimeout to simulate the delay of an AJAX call.
+ */
 class CreditApi {
+
+  /**
+   * Get all the credit transactions.
+   * @static
+   * @returns {Promise} Resolves with an object array of all credits.
+   */
   static getAllCredits() {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -25,6 +40,12 @@ class CreditApi {
     });
   }
 
+  /**
+   * Save a credit, whether an existing or new credit.
+   * @static
+   * @param {object} credit - The credit.
+   * @returns {Promise} Resolves with the saved credit.
+   */
   static saveCredit(credit) {
     credit = Object.assign({}, credit); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
@@ -51,6 +72,12 @@ class CreditApi {
     });
   }
 
+  /**
+   * Delete a credit.
+   * @static
+   * @param {string} creditId - The credit id.
+   * @returns {Promise} The promise object.
+   */
   static deleteCredit(creditId) {
     return new Promise((resolve) => {
       setTimeout(() => {

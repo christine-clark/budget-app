@@ -7,6 +7,9 @@ import CreditForm from './CreditForm';
 import {categoriesFormattedForDropdown} from '../selectors/categoriesSelector';
 import {validateForm} from '../../utils/validation';
 
+/**
+ * Display credit form to update or add a credit.
+ */
 export class ManageCreditPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -29,6 +32,11 @@ export class ManageCreditPage extends React.Component {
     }
   }
 
+  /**
+   * Update the credit state every time a change is made in the input field.
+   * @param {Event} event - The event from onChange fired from the input field.
+   * @returns {*} The result from setting the state of credit object.
+   */
   updateCreditState(event) {
     const field = event.target.name;
     let credit = Object.assign({}, this.state.credit);
@@ -36,6 +44,10 @@ export class ManageCreditPage extends React.Component {
     return this.setState({credit: credit});
   }
 
+  /**
+   * Validate the credit form and check if all fields are valid, such as post date and amount.
+   * @returns {boolean} True or false whether the form is valid or not.
+   */
   creditFormIsValid() {
     const credit = Object.assign({}, this.state.credit);
     const form = validateForm(credit);
@@ -43,6 +55,13 @@ export class ManageCreditPage extends React.Component {
     return form.formIsValid;
   }
 
+  /**
+   * Save the credit object when the submit button is clicked in the credit form.
+   * Update the states for 'saving' and 'credits' with the updated credit object.
+   * Redirect back to the home page once successfully saved.
+   * @param {Event} event - The event from submit button click.
+   * @returns {undefined}
+   */
   saveCredit(event) {
     event.preventDefault();
 
@@ -70,6 +89,11 @@ export class ManageCreditPage extends React.Component {
       });
   }
 
+  /**
+   * Redirect back to the home page and also display success alert for
+   * 800ms before automatically redirecting user.
+   * @returns {undefined}
+   */
   redirect() {
     const self = this;
     const alertElement = document.getElementsByClassName('alert')[0];
@@ -82,6 +106,10 @@ export class ManageCreditPage extends React.Component {
     }, 800);
   }
 
+  /**
+   * Render the credit form for updating or adding a credit.
+   * @returns {HTMLElement} The html to display in UI.
+   */
   render() {
     return(
       <CreditForm credit={this.state.credit}
@@ -105,6 +133,10 @@ ManageCreditPage.contextTypes = {
   router: PropTypes.object
 };
 
+/**
+ * Get a credit by id. Filter the existing list of credits to retrieve a single credit.
+ * @returns {Object} The credit object if found.
+ */
 function getCreditById(credits, id) {
   const credit = credits.filter(credit => credit.id === id);
   return credit ? credit[0] : null;

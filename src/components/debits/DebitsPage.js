@@ -7,6 +7,10 @@ import * as debitActions from '../../actions/debitActions';
 import DebitList from './DebitList';
 import LoadingDots from '../common/LoadingDots';
 
+/**
+ * Display all debit transactions in a table list with an Add Debit button.
+ * Also display a sum of total debit transactions in the header.
+ */
 class DebitsPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -14,15 +18,27 @@ class DebitsPage extends React.Component {
     this.redirectToAddDebitPage = this.redirectToAddDebitPage.bind(this);
   }
 
+  /**
+   * Sum all the debit transactions.
+   * @returns {string} The debits sum in currency format.
+   */
   debitsSum() {
     const debitsSum = calculateSum(this.props.debits);
     return getCurrencyFormattedNumber(debitsSum);
   }
 
+  /**
+   * Redirect to the add debit page (ManageDebitPage).
+   * @returns {undefined}
+   */
   redirectToAddDebitPage() {
     this.props.history.push('/debit');
   }
 
+  /**
+   * Render the debits sum, table of debit transactions, and the "Add Debit" button.
+   * @returns {HTMLElement} The html to display in UI.
+   */
   render() {
     const {debits, loading} = this.props;
 

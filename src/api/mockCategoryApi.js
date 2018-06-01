@@ -1,8 +1,9 @@
 import delay from './delay';
 
-// This file mocks a web API by working with the hard-coded data below.
-// It uses setTimeout to simulate the delay of an AJAX call.
-// All calls return promises.
+/**
+ * The initial mock categories to load in the project.
+ * @type {Array|String}
+ */
 const categories = [
   "employment",
   "mortgage",
@@ -19,7 +20,18 @@ const categories = [
   "miscellaneous"
 ];
 
+/**
+ * Class representing the Category API mocked for demo purposes.
+ * It mocks a web API by working with the hard-coded data below.
+ * It uses setTimeout to simulate the delay of an AJAX call.
+ */
 class CategoryApi {
+
+  /**
+   * Get all the categories.
+   * @static
+   * @returns {Promise} Resolves with a string array of all category names.
+   */
   static getAllCategories() {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -28,6 +40,12 @@ class CategoryApi {
     });
   }
 
+  /**
+   * Save a category, whether an existing or new category.
+   * @static
+   * @param {string} category - The category name.
+   * @returns {Promise} Resolves with the saved category.
+   */
   static saveCategory(category) {
     category = Object.assign({}, category); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
@@ -51,6 +69,12 @@ class CategoryApi {
     });
   }
 
+  /**
+   * Delete a category.
+   * @static
+   * @param {string} categoryName - The category name.
+   * @returns {Promise} The promise object.
+   */
   static deleteCategory(categoryName) {
     return new Promise((resolve) => {
       setTimeout(() => {

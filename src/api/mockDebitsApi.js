@@ -1,8 +1,9 @@
 import delay from './delay';
 
-// This file mocks a web API by working with the hard-coded data below.
-// It uses setTimeout to simulate the delay of an AJAX call.
-// All calls return promises.
+/**
+ * The initial mock debits to load in the project.
+ * @type {Array|Object}
+ */
 const debits = [{
     id: "1",
     postDate: "05/01/2018",
@@ -40,12 +41,26 @@ const debits = [{
   }
 ];
 
-//This would be performed on the server in a real app. Just stubbing in.
+/**
+ * Generates an id for a new mock debit.
+ * @type {Function}
+ */
 const generateId = () => {
   return String(debits.length + 1);
 };
 
+/**
+ * Class representing the Debit API mocked for demo purposes.
+ * It mocks a web API by working with the hard-coded data below.
+ * It uses setTimeout to simulate the delay of an AJAX call.
+ */
 class DebitApi {
+
+  /**
+   * Get all the debit transactions.
+   * @static
+   * @returns {Promise} Resolves with an object array of all debits.
+   */
   static getAllDebits() {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -54,6 +69,12 @@ class DebitApi {
     });
   }
 
+  /**
+   * Save a debit, whether an existing or new debit.
+   * @static
+   * @param {object} debit - The debit.
+   * @returns {Promise} Resolves with the saved debit.
+   */
   static saveDebit(debit) {
     debit = Object.assign({}, debit); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
@@ -80,6 +101,12 @@ class DebitApi {
     });
   }
 
+  /**
+   * Delete a debit.
+   * @static
+   * @param {string} debitId - The debit id.
+   * @returns {Promise} The promise object.
+   */
   static deleteDebit(debitId) {
     return new Promise((resolve) => {
       setTimeout(() => {

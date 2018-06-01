@@ -7,6 +7,10 @@ import * as creditActions from '../../actions/creditActions';
 import CreditList from './CreditList';
 import LoadingDots from '../common/LoadingDots';
 
+/**
+ * Display all credit transactions in a table list with an Add Credit button.
+ * Also display a sum of total credit transactions in the header.
+ */
 class CreditsPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -14,15 +18,27 @@ class CreditsPage extends React.Component {
     this.redirectToAddCreditPage = this.redirectToAddCreditPage.bind(this);
   }
 
+  /**
+   * Sum all the credit transactions.
+   * @returns {string} The credits sum in currency format.
+   */
   creditsSum() {
     const creditsSum = calculateSum(this.props.credits);
     return getCurrencyFormattedNumber(creditsSum);
   }
 
+  /**
+   * Redirect to the add credit page (ManageCreditPage).
+   * @returns {undefined}
+   */
   redirectToAddCreditPage() {
     this.props.history.push('/credit');
   }
 
+  /**
+   * Render the credits sum, table of credit transactions, and the "Add Credit" button.
+   * @returns {HTMLElement} The html to display in UI.
+   */
   render() {
     const {credits, loading} = this.props;
 

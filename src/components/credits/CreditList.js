@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CreditListRow from './CreditListRow';
 
+/**
+ * Display a list of all credit transactions in a table.
+ */
 const CreditList = ({credits/*, deleteCredit*/}) => {
   return (
     <div>

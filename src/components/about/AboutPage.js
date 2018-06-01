@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/about-page.css';
 
+/**
+ * The about page that will render html for the UI.
+ */
 const AboutPage = () => {
   return (
     <main>

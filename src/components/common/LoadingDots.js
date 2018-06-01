@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Loading dots to display in the UI. This will display
+ * 3 dots (...) in interval of 300ms per dot until frame is
+ * complete and interval is cleared.
+ */
 class LoadingDots extends React.Component {
   constructor(props, context) {
     super(props, context);

@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * The input tag that will display all text input fields with specific value and text.
+ * This will also handle error display for the input tag, as well as any
+ * onChange function if defined.
+ */
 const TextInput = ({name, label, onChange, placeholder, value, error}) => {
   let wrapperClass = 'form-group';
   if (error && error.length > 0) {

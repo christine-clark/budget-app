@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * The select tag that will display all options with specific value and text.
+ * This will also handle error display for the select tag, as well as any
+ * onChange function if defined.
+ */
 const SelectInput = ({name, label, onChange, defaultOption, value, error, options}) => {
   return (
     <div className="form-group">

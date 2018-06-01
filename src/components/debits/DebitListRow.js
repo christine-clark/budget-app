@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {getCurrencyFormattedNumber} from '../../utils/numberFormat';
 
+/**
+ * Display a row for each debit transaction in the table.
+ */
 const DebitListRow = ({debit}) => {
   return (
     <tr>

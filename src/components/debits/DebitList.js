@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DebitListRow from './DebitListRow';
 
+/**
+ * Display a list of all debit transactions in a table.
+ */
 const DebitList = ({debits/*, deleteDebit*/}) => {
   return (
     <div>

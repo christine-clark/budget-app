@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {getCurrencyFormattedNumber} from '../../utils/numberFormat';
 
+/**
+ * Display a row for each credit transaction in the table.
+ */
 const CreditListRow = ({credit}) => {
   return (
     <tr>

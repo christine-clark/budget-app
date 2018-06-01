@@ -10,6 +10,10 @@ import CreditList from '../credits/CreditList';
 import DebitList from '../debits/DebitList';
 import LoadingDots from '../common/LoadingDots';
 
+/**
+ * Home page which will display all credit and debit transactions with sums of both.
+ * This will also display the total cashflow from subtracting debits from credits.
+ */
 class HomePage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -17,6 +21,11 @@ class HomePage extends React.Component {
     this.redirectToAddPage = this.redirectToAddPage.bind(this);
   }
 
+  /**
+   * Calculate the sums for all credit and debit transactions. Calculate the total
+   * cashflow amount after subtracting debits from credits.
+   * @returns {Object} The total, total class, sum of credits, and sum of debits.
+   */
   budget() {
     const creditsSum = calculateSum(this.props.credits);
     const debitsSum = calculateSum(this.props.debits);
@@ -30,10 +39,19 @@ class HomePage extends React.Component {
     }
   }
 
+  /**
+   * Redirect to the add page by page type, either the /debit or /credit page.
+   * @param {string} pageType - The page type name, such as 'debit' or 'credit'.
+   * @returns {undefined}
+   */
   redirectToAddPage(pageType) {
     this.props.history.push(`/${pageType}`);
   }
 
+  /**
+   * Render the total cashflow summary and the list of all credit and debit transactions.
+   * @returns {HTMLElement} The html to display in UI.
+   */
   render() {
     const {credits, debits, loading} = this.props;
 
