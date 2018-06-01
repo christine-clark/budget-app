@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as debitActions from '../../actions/debitActions';
 import DebitForm from './DebitForm';
 import {categoriesFormattedForDropdown} from '../selectors/categoriesSelector';
+import {validateForm} from '../../utils/validation';
 
 export class ManageDebitPage extends React.Component {
   constructor(props, context) {
@@ -36,16 +37,10 @@ export class ManageDebitPage extends React.Component {
   }
 
   debitFormIsValid() {
-    let formIsValid = true;
-    let errors = {};
-
-    if (!this.state.debit.postDate) {
-      errors.postDate = 'Missing: Must have a post date.';
-      formIsValid = false;
-    }
-
-    this.setState({errors: errors});
-    return formIsValid;
+    const debit = Object.assign({}, this.state.debit);
+    const form = validateForm(debit);
+    this.setState({errors: form.errors});
+    return form.formIsValid;
   }
 
   saveDebit(event) {

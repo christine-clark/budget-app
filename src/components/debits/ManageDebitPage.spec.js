@@ -33,14 +33,60 @@ describe('Manage Debit Page', () => {
     expect(wrapper.state().errors).toEqual({});
   });
 
-  it('sets error message when trying to save empty post date', () => {
+  it('sets error message when trying to save empty post date and empty amount', () => {
     const props = setupProps('', true);
     const wrapper = mount(<ManageDebitPage {...props} />);
     const saveButton = wrapper.find('input').last();
     expect(saveButton.prop('type')).toBe('submit');
 
     saveButton.simulate('click');
-    expect(wrapper.state().errors.postDate).toBe('Missing: Must have a post date.');
+    expect(Object.keys(wrapper.state().errors).length).toBe(2);
+    expect(wrapper.state().errors.postDate).toBe('Post date is required. Please enter a post date.');
+    expect(wrapper.state().errors.amount).toBe('Amount is required. Please enter an amount.');
+  });
+
+  it('checks for a valid post date format as mm/dd/yyyy', () => {
+    const props = setupProps('', true);
+    const wrapper = mount(<ManageDebitPage {...props} />);
+    const postDateInput = wrapper.find('input[name="postDate"]').first();
+    const amountInput = wrapper.find('input[name="amount"]').first();
+    const saveButton = wrapper.find('input').last();
+
+    postDateInput.simulate('change', {target: {name: 'postDate', value: '01/01/2018'}});
+    amountInput.simulate('change', {target: {name: 'amount', value: '20.00'}});
+    saveButton.simulate('click');
+
+    expect(wrapper.state().errors).toEqual({});
+  });
+
+  it('errors when an ivalid post date is entered', () => {
+    const props = setupProps('', true);
+    const wrapper = mount(<ManageDebitPage {...props} />);
+    const postDateInput = wrapper.find('input[name="postDate"]').first();
+    const amountInput = wrapper.find('input[name="amount"]').first();
+    const saveButton = wrapper.find('input').last();
+
+    postDateInput.simulate('change', {target: {name: 'postDate', value: '13/1/2018'}});
+    amountInput.simulate('change', {target: {name: 'amount', value: '150.00'}});
+    saveButton.simulate('click');
+
+    expect(Object.keys(wrapper.state().errors).length).toBe(1);
+    expect(wrapper.state().errors.postDate).toBe('Invalid date format. Please enter date as mm/dd/yyyy.');
+  });
+
+  it('errors when an ivalid amount is entered', () => {
+    const props = setupProps('', true);
+    const wrapper = mount(<ManageDebitPage {...props} />);
+    const postDateInput = wrapper.find('input[name="postDate"]').first();
+    const amountInput = wrapper.find('input[name="amount"]').first();
+    const saveButton = wrapper.find('input').last();
+
+    postDateInput.simulate('change', {target: {name: 'postDate', value: '01/01/2018'}});
+    amountInput.simulate('change', {target: {name: 'amount', value: '-10.24'}});
+    saveButton.simulate('click');
+
+    expect(Object.keys(wrapper.state().errors).length).toBe(1);
+    expect(wrapper.state().errors.amount).toBe('Amount is not a valid currency. Please enter amount as XXXX.XX without ($) dollar symbol, for example: 100.00.');
   });
 });
 

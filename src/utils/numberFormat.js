@@ -46,7 +46,8 @@ export function getFormattedNumber(value) {
         return roundedValue;
     }
   }
-  return roundedValue;
+
+  return `${roundedValue}.00`;
 }
 
 export function isInt(n) {

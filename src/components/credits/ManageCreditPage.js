@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as creditActions from '../../actions/creditActions';
 import CreditForm from './CreditForm';
 import {categoriesFormattedForDropdown} from '../selectors/categoriesSelector';
+import {validateForm} from '../../utils/validation';
 
 export class ManageCreditPage extends React.Component {
   constructor(props, context) {
@@ -36,16 +37,10 @@ export class ManageCreditPage extends React.Component {
   }
 
   creditFormIsValid() {
-    let formIsValid = true;
-    let errors = {};
-
-    if (!this.state.credit.postDate) {
-      errors.postDate = 'Missing: Must have a post date.';
-      formIsValid = false;
-    }
-
-    this.setState({errors: errors});
-    return formIsValid;
+    const credit = Object.assign({}, this.state.credit);
+    const form = validateForm(credit);
+    this.setState({errors: form.errors});
+    return form.formIsValid;
   }
 
   saveCredit(event) {

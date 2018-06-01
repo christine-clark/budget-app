@@ -8,7 +8,8 @@ export function roundNumber(numberToRound, numberOfDecimalPlaces) {
   }
 
   const scrubbedNumber = numberToRound.toString().replace('$', '').replace(',', '');
-  return Math.round(scrubbedNumber * Math.pow(10, numberOfDecimalPlaces)) / Math.pow(10, numberOfDecimalPlaces);
+  const rounded = Math.round(scrubbedNumber * Math.pow(10, numberOfDecimalPlaces)) / Math.pow(10, numberOfDecimalPlaces);
+  return Number(rounded.toFixed(numberOfDecimalPlaces));
 }
 
 // adds array of values passed.

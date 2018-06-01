@@ -28,7 +28,7 @@ const debits = [{
     id: "4",
     postDate: "05/21/2018",
     description: "Publix Supermarket",
-    amount: "100.50",
+    amount: "100.00",
     category: "groceries"
   },
   {
