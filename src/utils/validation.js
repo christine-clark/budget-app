@@ -1,8 +1,18 @@
+/**
+ * Check if amount is in a valid currency format.
+ * @param {String} amount - The amount to check.
+ * @return {boolean} Determines if the amount is formatted as currency.
+ */
 export function isValidCurrency(amount) {
   var USCurrencyRegex = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
   return USCurrencyRegex.test(amount);
 }
 
+/**
+ * Check if date string is a valid date. Checks if date is also valid if a leap year.
+ * @param {String} dateString - The date string to check.
+ * @return {boolean} Determines if string is a valid date.
+ */
 export function isValidDate(dateString) {
   const USDateFormat = /^\d{1,2}\/\d{1,2}\/\d{4}$/; // Date format mm/dd/yyyy
   if (!USDateFormat.test(dateString)) {
@@ -28,6 +38,11 @@ export function isValidDate(dateString) {
   return day > 0 && day <= monthLength[month - 1];
 };
 
+/**
+ * Validate the form for credit and debits.
+ * @param {Object} field - The form field.
+ * @return {Object} Error object if form has errors.
+ */
 export function validateForm(field) {
   let errors = {};
   let formIsValid = true;

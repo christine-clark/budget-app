@@ -1,14 +1,30 @@
 import {roundNumber} from './math';
 
+/**
+ * Get the sum two values.
+ * @param {Number} total - The total to add value.
+ * @param {Number} num - The number to add to the total.
+ * @return {Number} The sum of two values.
+ */
 export function getSum(total, num) {
   return total + num;
 }
 
-export function calculateSum(items) {
-  const itemAmounts = items.map(item => Number(item.amount));
-  return itemAmounts.length ? itemAmounts.reduce(getSum) : '0';
+/**
+ * Calculate the sum of an array.
+ * @param {Array} values - The values to sum.
+ * @return {Number} The sum of all values in an array.
+ */
+export function calculateSum(values) {
+  const valueAmounts = values.map(value => Number(value.amount));
+  return valueAmounts.length ? valueAmounts.reduce(getSum) : '0';
 }
 
+/**
+ * Get the number formatted for US currency with proper decimal places.
+ * @param {Number} value - The value to format.
+ * @return {String} The currency formatted value with dollar sign for US dollars.
+ */
 export function getCurrencyFormattedNumber(value) {
   if (value === null) {
     return '';
@@ -17,6 +33,11 @@ export function getCurrencyFormattedNumber(value) {
   return '$' + getFormattedNumber(value); // eslint-disable-line prefer-template
 }
 
+/**
+ * Get the number formatted with proper decimal places and rounded if more than 2 decimal places.
+ * @param {Number} value - The value to round and format.
+ * @return {String} The formatted number with 2 decimal places.
+ */
 export function getFormattedNumber(value) {
   if (value === 0) {
     return 0;
@@ -50,6 +71,11 @@ export function getFormattedNumber(value) {
   return `${roundedValue}.00`;
 }
 
+/**
+ * Check if a value is an integer.
+ * @param {*} n - The value to check.
+ * @return {boolean} Determines if the value is an integer.
+ */
 export function isInt(n) {
   if (n === '' || n === null) {
     return false;
@@ -58,6 +84,11 @@ export function isInt(n) {
   return n % 1 === 0;
 }
 
+/**
+ * Scrub the formatting by removing all special symbols, such as $, commas and periods.
+ * @param {String} value - The value to scrub.
+ * @return {String} The stripped value.
+ */
 export function scrubFormatting(value) {
   return value.toString().replace('$', '').replace(',', '').replace('.', '');
 }

@@ -7,6 +7,11 @@ import rootReducer from '../reducers';
 
 export const history = createHistory();
 
+/**
+ * Configure the store for production environment.
+ * @param {Object} initialState - The initial state object.
+ * @return {Store} The store object that holds the complete state of the app.
+ */
 function configureStoreProd(initialState) {
   const reactRouterMiddleware = routerMiddleware(history);
   const middlewares = [
@@ -20,6 +25,11 @@ function configureStoreProd(initialState) {
   );
 }
 
+/**
+ * Configure the store for development environment.
+ * @param {Object} initialState - The initial state object.
+ * @return {Store} The store object that holds the complete state of the app.
+ */
 function configureStoreDev(initialState) {
   const reactRouterMiddleware = routerMiddleware(history);
   const middlewares = [
