@@ -9,9 +9,10 @@ import TextInput from '../common/TextInput';
  * passed into the form. This will also handle displaying
  * errors if available or a success message if saved successfully.
  */
-const DebitForm = ({debit, allCategories, onSave, onChange, saving, errors}) => (
+const DebitForm = ({debit, allCategories, onSave, onChange, saving, errorMessage, errors}) => (
   <form>
     {saving && <div className="alert">Saving...</div>}
+    {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
     <h1>{debit.id ? 'Update' : 'Add New'} Debit</h1>
     <TextInput name="postDate"
                label="Post Date"
@@ -49,6 +50,7 @@ DebitForm.propTypes = {
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   saving: PropTypes.bool,
+  errorMessage: PropTypes.string,
   errors: PropTypes.object
 };
 

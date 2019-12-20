@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as creditActions from '../../actions/creditActions';
 import CreditForm from './CreditForm';
-import {categoriesFormattedForDropdown} from '../selectors/categoriesSelector';
-import {validateForm} from '../../utils/validation';
+import { categoriesFormattedForDropdown } from '../selectors/categoriesSelector';
+import { validateForm } from '../../utils/validation';
 
 /**
  * Display credit form to update or add a credit.
@@ -26,12 +26,6 @@ export class ManageCreditPage extends React.Component {
     this.saveCredit = this.saveCredit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.credit.id !== nextProps.credit.id) {
-      this.setState({credit: Object.assign({}, nextProps.credit)});
-    }
-  }
-
   /**
    * Update the credit state every time a change is made in the input field.
    * @param {Event} event - The event from onChange fired from the input field.
@@ -41,7 +35,7 @@ export class ManageCreditPage extends React.Component {
     const field = event.target.name;
     let credit = Object.assign({}, this.state.credit);
     credit[field] = event.target.value;
-    return this.setState({credit: credit});
+    return this.setState({ credit: credit });
   }
 
   /**
@@ -51,7 +45,7 @@ export class ManageCreditPage extends React.Component {
   creditFormIsValid() {
     const credit = Object.assign({}, this.state.credit);
     const form = validateForm(credit);
-    this.setState({errors: form.errors});
+    this.setState({ errors: form.errors });
     return form.formIsValid;
   }
 
@@ -69,7 +63,7 @@ export class ManageCreditPage extends React.Component {
       return;
     }
 
-    this.setState({saving: true});
+    this.setState({ saving: true });
     this.props.actions.saveCredit(this.state.credit)
       .then(() => {
         const credit = this.state.credit;
@@ -80,12 +74,11 @@ export class ManageCreditPage extends React.Component {
           credits.splice(existingCreditIndex, 1, credit);
         }
 
-        this.setState({credits: credits});
+        this.setState({ credits: credits });
         this.redirect();
       })
       .catch(error => {
-        alert(error);
-        this.setState({saving: false});
+        this.setState({ saving: false, errorMessage: error });
       });
   }
 
@@ -101,7 +94,7 @@ export class ManageCreditPage extends React.Component {
     alertElement.textContent = 'Saved!';
 
     setTimeout(() => {
-      self.setState({saving: false});
+      self.setState({ saving: false });
       self.props.history.push('/');
     }, 800);
   }
@@ -111,13 +104,14 @@ export class ManageCreditPage extends React.Component {
    * @returns {HTMLElement} The html to display in UI.
    */
   render() {
-    return(
-      <CreditForm credit={this.state.credit}
-                  allCategories={this.state.categories}
-                  errors={this.state.errors}
-                  saving={this.state.saving}
-                  onChange={this.updateCreditState}
-                  onSave={this.saveCredit} />
+    return ( <
+      CreditForm credit = { this.state.credit }
+      allCategories = { this.state.categories }
+      errors = { this.state.errors }
+      saving = { this.state.saving }
+      onChange = { this.updateCreditState }
+      onSave = { this.saveCredit }
+      />
     );
   }
 }
@@ -143,10 +137,9 @@ function getCreditById(credits, id) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const creditId = ownProps.match.params.id;  // from the path `/credit/:id`
+  const creditId = ownProps.match.params.id; // from the path `/credit/:id`
   let credit = creditId && state.credits.length > 0 ?
-    getCreditById(state.credits, creditId) :
-    {id: '', postDate: '', description: '', amount: '', category: ''};
+    getCreditById(state.credits, creditId) : { id: '', postDate: '', description: '', amount: '', category: '' };
 
   return {
     credits: state.credits,

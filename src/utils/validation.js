@@ -36,7 +36,7 @@ export function isValidDate(dateString) {
   }
 
   return day > 0 && day <= monthLength[month - 1];
-};
+}
 
 /**
  * Validate the form for credit and debits.

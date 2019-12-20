@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import * as debitActions from '../../actions/debitActions';
 import DebitForm from './DebitForm';
-import {categoriesFormattedForDropdown} from '../selectors/categoriesSelector';
-import {validateForm} from '../../utils/validation';
+import { categoriesFormattedForDropdown } from '../selectors/categoriesSelector';
+import { validateForm } from '../../utils/validation';
 
 /**
  * Display debit form to update or add a debit.
@@ -26,12 +26,6 @@ export class ManageDebitPage extends React.Component {
     this.saveDebit = this.saveDebit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.debit.id !== nextProps.debit.id) {
-      this.setState({debit: Object.assign({}, nextProps.debit)});
-    }
-  }
-
   /**
    * Update the debit state every time a change is made in the input field.
    * @param {Event} event - The event from onChange fired from the input field.
@@ -41,7 +35,7 @@ export class ManageDebitPage extends React.Component {
     const field = event.target.name;
     let debit = Object.assign({}, this.state.debit);
     debit[field] = event.target.value;
-    return this.setState({debit: debit});
+    return this.setState({ debit: debit });
   }
 
   /**
@@ -51,7 +45,7 @@ export class ManageDebitPage extends React.Component {
   debitFormIsValid() {
     const debit = Object.assign({}, this.state.debit);
     const form = validateForm(debit);
-    this.setState({errors: form.errors});
+    this.setState({ errors: form.errors });
     return form.formIsValid;
   }
 
@@ -69,7 +63,7 @@ export class ManageDebitPage extends React.Component {
       return;
     }
 
-    this.setState({saving: true});
+    this.setState({ saving: true });
     this.props.actions.saveDebit(this.state.debit)
       .then(() => {
         const debit = this.state.debit;
@@ -80,12 +74,11 @@ export class ManageDebitPage extends React.Component {
           debits.splice(existingDebitIndex, 1, debit);
         }
 
-        this.setState({debits: debits});
+        this.setState({ debits: debits });
         this.redirect();
       })
       .catch(error => {
-        alert(error);
-        this.setState({saving: false});
+        this.setState({ saving: false, errorMessage: error });
       });
   }
 
@@ -101,7 +94,7 @@ export class ManageDebitPage extends React.Component {
     alertElement.textContent = 'Saved!';
 
     setTimeout(() => {
-      self.setState({saving: false});
+      self.setState({ saving: false });
       self.props.history.push('/');
     }, 800);
   }
@@ -111,13 +104,14 @@ export class ManageDebitPage extends React.Component {
    * @returns {HTMLElement} The html to display in UI.
    */
   render() {
-    return(
-      <DebitForm debit={this.state.debit}
-                 allCategories={this.state.categories}
-                 errors={this.state.errors}
-                 saving={this.state.saving}
-                 onChange={this.updateDebitState}
-                 onSave={this.saveDebit} />
+    return ( <
+      DebitForm debit = { this.state.debit }
+      allCategories = { this.state.categories }
+      errors = { this.state.errors }
+      saving = { this.state.saving }
+      onChange = { this.updateDebitState }
+      onSave = { this.saveDebit }
+      />
     );
   }
 }
@@ -143,10 +137,9 @@ function getDebitById(debits, id) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const debitId = ownProps.match.params.id;  // from the path `/debit/:id`
+  const debitId = ownProps.match.params.id; // from the path `/debit/:id`
   let debit = debitId && state.debits.length > 0 ?
-    getDebitById(state.debits, debitId) :
-    {id: '', postDate: '', description: '', amount: '', category: ''};
+    getDebitById(state.debits, debitId) : { id: '', postDate: '', description: '', amount: '', category: '' };
 
   return {
     debits: state.debits,

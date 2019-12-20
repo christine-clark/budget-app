@@ -7,8 +7,14 @@ import delay from './delay';
 const credits = [{
   id: "1",
   postDate: "05/01/2018",
-  description: "Salary",
-  amount: "5000.00",
+  description: "Paycheck",
+  amount: "2500.00",
+  category: "employment"
+}, {
+  id: "2",
+  postDate: "05/15/2018",
+  description: "Paycheck",
+  amount: "2500.00",
   category: "employment"
 }];
 

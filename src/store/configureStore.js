@@ -1,53 +1,58 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
-import createHistory from 'history/createBrowserHistory';
-import { routerMiddleware } from 'react-router-redux';
-import rootReducer from '../reducers';
+import { createBrowserHistory } from "history";
+// 'routerMiddleware': the new way of storing route changes with redux middleware since rrV4.
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import createRootReducer from '../reducers';
 
-export const history = createHistory();
+export const history = createBrowserHistory();
+const connectRouterHistory = connectRouter(history);
 
-/**
- * Configure the store for production environment.
- * @param {Object} initialState - The initial state object.
- * @return {Store} The store object that holds the complete state of the app.
- */
 function configureStoreProd(initialState) {
   const reactRouterMiddleware = routerMiddleware(history);
   const middlewares = [
+    // Add other middleware on this line...
+
+    // thunk middleware can also accept an extra argument to be passed to each thunk action
+    // https://github.com/reduxjs/redux-thunk#injecting-a-custom-argument
     thunk,
     reactRouterMiddleware,
   ];
 
-  return createStore(rootReducer, initialState, compose(
-    applyMiddleware(...middlewares)
-    )
+  return createStore(
+    createRootReducer(history), // root reducer with router state
+    initialState,
+    compose(applyMiddleware(...middlewares))
   );
 }
 
-/**
- * Configure the store for development environment.
- * @param {Object} initialState - The initial state object.
- * @return {Store} The store object that holds the complete state of the app.
- */
 function configureStoreDev(initialState) {
   const reactRouterMiddleware = routerMiddleware(history);
   const middlewares = [
+    // Add other middleware on this line...
+
+    // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
     reduxImmutableStateInvariant(),
+
+    // thunk middleware can also accept an extra argument to be passed to each thunk action
+    // https://github.com/reduxjs/redux-thunk#injecting-a-custom-argument
     thunk,
     reactRouterMiddleware,
   ];
 
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const store = createStore(rootReducer, initialState, composeEnhancers(
-    applyMiddleware(...middlewares)
-    )
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
+  const store = createStore(
+    createRootReducer(history), // root reducer with router state
+    initialState,
+    composeEnhancers(applyMiddleware(...middlewares))
   );
 
   if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers').default; // eslint-disable-line global-require
-      store.replaceReducer(nextReducer);
+      const nextRootReducer = require('../reducers').default; // eslint-disable-line global-require
+      store.replaceReducer(connectRouterHistory(nextRootReducer));
     });
   }
 
